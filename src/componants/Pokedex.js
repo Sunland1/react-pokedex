@@ -1,12 +1,15 @@
 import React, { useState , useEffect } from 'react'
 import TinderCard from 'react-tinder-card'
+import { Link } from "react-router-dom";
 
 import { getPokemonInfo } from '../services/pokemon'
+import { saveLocalStorage } from '../services/localStorage';
+
 import '../css/Pokedex.css'
 
 
 function getRandomInt(max) {
-  return Math.floor(Math.random() * max);
+  return Math.floor(Math.random() * max) === 0 ? 1 : Math.floor(Math.random() * max)
 }
 
 function capitalizeFirstLetter(string) {
@@ -36,6 +39,7 @@ function Pokedex () {
     if(direction === "left"){
       let newCurrentFav = currentFav
       newCurrentFav.push(pokemon)
+      saveLocalStorage(newCurrentFav)
       setCurrentFav(newCurrentFav)
     }
 
@@ -67,7 +71,7 @@ function Pokedex () {
           </TinderCard>
         )}
       </div>
-      <button onClick={() => console.log(currentFav)}>Go to fav</button>
+      <button><Link to="/fav">Go to fav</Link></button>
     </div>
   )
 }

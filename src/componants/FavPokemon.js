@@ -30,7 +30,7 @@ export default function FavPokemon(){
             <div className='grid md:grid-cols-6 grid-cols-1 w-50 text-center mb-5'>
                 {currentFav.map( (pokemon) => 
                     <div key={pokemon.id} className="bg-gray-500 rounded overflow-hidden shadow-lg m-5">
-                        <img className="w-[250px]" src={pokemon.backgroundImage} alt={`image of ${pokemon.name}`}></img>
+                        <img className="w-[250px]" src={pokemon.backgroundImage} alt={`${pokemon.name}`}/>
                         <div className="px-6 py-4">
                             <div className="font-bold text-xxl mb-2 text-black">{capitalizeFirstLetter(pokemon.name)}</div>
                             </div>

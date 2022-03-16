@@ -1,6 +1,7 @@
 import React, { useState , useEffect } from 'react'
 import TinderCard from 'react-tinder-card'
 import { Link } from "react-router-dom";
+import ClipLoader from "react-spinners/ClipLoader";
 
 import { getPokemonInfo } from '../services/pokemon'
 import { saveLocalStorage , getLocalStorage } from '../services/localStorage';
@@ -20,19 +21,17 @@ function Pokedex () {
   const [pokemonList , setPokemonList ] = useState([])
   const [currentFav , setCurrentFav] = useState([])
 
-  useEffect( async () => {
-    let pokemon = {}
-    let pokemonList = []
+  useEffect( () => {
     for( let i = 0 ; i < 10 ; i++ ){
-      pokemon = await getPokemonInfo(getRandomInt(898))
-      pokemonList.push({
-        id : pokemon.id,
-        name: pokemon.name,
-        backgroundImage: pokemon.sprites.other["official-artwork"]["front_default"]
+      getPokemonInfo(getRandomInt(898)).then( (pokemon) => {
+        setPokemonList( p => [...p,{
+          id : pokemon.id,
+          name: pokemon.name,
+          backgroundImage: pokemon.sprites.other["official-artwork"]["front_default"]
+        }] )
       })
     }
     setCurrentFav(getLocalStorage())
-    setPokemonList(pokemonList)
   } , [])
 
   const swiped = async (direction, pokemon) => {
@@ -60,17 +59,26 @@ function Pokedex () {
    
   }
 
+  const loading = () => {
+    if(pokemonList.length !== 10 ){
+      return <ClipLoader color='blue'/>
+    }else{
+      return pokemonList.map((pokemon) =>
+        <TinderCard className='swipe ' key={pokemon.id} onSwipe={(dir) => swiped(dir, pokemon)}>
+          <div style={{ backgroundImage: 'url(' + pokemon.backgroundImage + ')' }} className='card'>
+            <h3>{capitalizeFirstLetter(pokemon.name)}</h3>
+          </div>
+        </TinderCard>
+      )
+    }
+  }
+
+
   return (
     <div className='text-center'>
       <h1 className='p-5'>PokeTinder</h1>
       <div className='cardContainer mb-5'>
-        {pokemonList.map((pokemon) =>
-          <TinderCard className='swipe ' key={pokemon.id} onSwipe={(dir) => swiped(dir, pokemon)}>
-            <div style={{ backgroundImage: 'url(' + pokemon.backgroundImage + ')' }} className='card'>
-              <h3>{capitalizeFirstLetter(pokemon.name)}</h3>
-            </div>
-          </TinderCard>
-        )}
+        {loading()}
       </div>
       <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'><Link to="/fav">Go to fav</Link></button>
     </div>

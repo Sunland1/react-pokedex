@@ -21,6 +21,8 @@ function Pokedex () {
   const [pokemonList , setPokemonList ] = useState([])
   const [currentFav , setCurrentFav] = useState([])
 
+
+  //Init the pokemonList with a random number < 898 because we have 898 pokemon 
   useEffect( () => {
     for( let i = 0 ; i < 10 ; i++ ){
       getPokemonInfo(getRandomInt(898)).then( (pokemon) => {
@@ -40,6 +42,7 @@ function Pokedex () {
     }
   } , [])
 
+  //Add favorite Pokemon with swip left
   const swiped = async (direction, pokemon) => {
 
     if(direction === "left"){
@@ -65,6 +68,7 @@ function Pokedex () {
    
   }
 
+  //return a spinner when the list is not complet
   const loading = () => {
     if(pokemonList.length !== 10 ){
       return <ClipLoader color='blue'/>

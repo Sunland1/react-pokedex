@@ -16,7 +16,7 @@ export default function FavPokemon(){
         setCurrentFav(getLocalStorage())
     } , [])
 
-
+    //Remove a pokemon from a fav list in the local storage
     const removeFav = (id) => {
         let newCurrentFav = currentFav.filter((element) => element.id !== id )
         setCurrentFav(newCurrentFav)
@@ -24,7 +24,6 @@ export default function FavPokemon(){
     }
 
 
-    //Mise en Form
     return(
         <>
             <div className='grid md:grid-cols-6 grid-cols-1 w-50 text-center mb-5'>

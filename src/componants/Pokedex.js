@@ -3,7 +3,7 @@ import TinderCard from 'react-tinder-card'
 import { Link } from "react-router-dom";
 
 import { getPokemonInfo } from '../services/pokemon'
-import { saveLocalStorage } from '../services/localStorage';
+import { saveLocalStorage , getLocalStorage } from '../services/localStorage';
 
 import '../css/Pokedex.css'
 
@@ -31,6 +31,7 @@ function Pokedex () {
         backgroundImage: pokemon.sprites.other["official-artwork"]["front_default"]
       })
     }
+    setCurrentFav(getLocalStorage())
     setPokemonList(pokemonList)
   } , [])
 
@@ -60,9 +61,9 @@ function Pokedex () {
   }
 
   return (
-    <div>
-      <h1>PokeTinder</h1>
-      <div className='cardContainer'>
+    <div className='text-center'>
+      <h1 className='p-5'>PokeTinder</h1>
+      <div className='cardContainer mb-5'>
         {pokemonList.map((pokemon) =>
           <TinderCard className='swipe ' key={pokemon.id} onSwipe={(dir) => swiped(dir, pokemon)}>
             <div style={{ backgroundImage: 'url(' + pokemon.backgroundImage + ')' }} className='card'>
@@ -71,7 +72,7 @@ function Pokedex () {
           </TinderCard>
         )}
       </div>
-      <button><Link to="/fav">Go to fav</Link></button>
+      <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'><Link to="/fav">Go to fav</Link></button>
     </div>
   )
 }

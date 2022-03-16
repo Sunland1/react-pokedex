@@ -31,7 +31,13 @@ function Pokedex () {
         }] )
       })
     }
-    setCurrentFav(getLocalStorage())
+    let localStorage = getLocalStorage()
+    if(localStorage === null){
+      setCurrentFav([])
+      saveLocalStorage([])
+    }else{
+      setCurrentFav(localStorage)
+    }
   } , [])
 
   const swiped = async (direction, pokemon) => {

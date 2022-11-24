@@ -39,9 +39,9 @@ pipeline {
                 }
                 sh 'docker push sunland/reactpokedex:latest'
             }
-        }
-        
-        post {
+        } 
+    }
+    post {
             failure {
                 emailext body: 'Ce build $BUILD_NUMBER a échoué',
                 recipientProviders: [requestor()],
@@ -50,7 +50,4 @@ pipeline {
 
             }
         }
-        
-        
-    }
 }

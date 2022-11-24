@@ -21,6 +21,7 @@ pipeline {
         
         stage('Run test'){
             steps {
+                sh 'rip'
                 sh 'npm run test'
             }
         }

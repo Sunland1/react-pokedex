@@ -3,7 +3,35 @@ pipeline {
     tools {
         nodejs "node 18"
     }
+    
+    environment {
+        login = "Sunland"
+        couleur = "red"
+    }
+    
+    
     stages {
+        
+        stage('Use env var') {
+            steps {
+                echo "Login is ${LOGIN}"
+                echo "Color is ${COULEUR}"
+            }
+        }
+        stage('Use env but they are news') {
+           environment {
+                LOGIN = "login"
+                COULEUR = "red"
+                LOISIR = "telegaming"
+            }
+            steps {
+                echo "Login is ${LOGIN}"
+                echo "Color is now ${COULEUR}"
+                echo "Loisir is ${LOISIR}"
+            }
+        }
+        
+        
         stage('git checkout') {
             steps {
                 git branch: 'main' , 

@@ -41,6 +41,16 @@ pipeline {
             }
         }
         
+        post {
+            failure {
+                emailext body: 'Ce build $BUILD_NUMBER a échoué',
+                recipientProviders: [requestor()],
+                subject: 'build',
+                to: 'alexandre.horville@efrei.net'
+
+            }
+        }
+        
         
     }
 }
